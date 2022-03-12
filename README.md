@@ -1,24 +1,65 @@
-# README
+# Terminal POC
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Getting Started
 
-Things you may want to cover:
+### Requirements
 
-* Ruby version
+- Ruby 2.7.5
+- Rails 6.1.5
+- Postgres 11
 
-* System dependencies
+### Project setup
 
-* Configuration
+Terminal POC project is a pretty straightforward Rails app.  It requires Ruby and Postgres.
 
-* Database creation
+After checking out the code, just do:
 
-* Database initialization
+```bash
+cp .env.sample .env
+bundle
+rails db:setup
+rails server
+```
 
-* How to run the test suite
+>make sure to set all the environment variables in .env
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
+#### About ngrok
 
-* ...
+[ngrok](https://ngrok.com/) is used to expose a URL to receive the webhook events
+
+use it like: `ngrok http 3000`
+
+>make sure to set `NGROK_HOST` as the HTTPS address that ngrok will provide
+
+## Sample API Usage
+
+In order to create a request and start getting updates, just hit the following endpoint with your `bill_of_lading` and `scac`, and look `public/results.csv` for changes.
+
+```
+HTTP Verb: POST
+URL: http://localhost:3000/v1/requests
+Headers: { "Content-Type"  => "application/vnd.api+json" }
+body:
+{
+  "data": {
+    "type": "requests",
+    "attributes": {
+      "bill_of_lading": "W226267303",
+      "scac": "YMLU"
+    }
+  }
+}
+```
+
+
+## Testing
+
+* Test are written using [rspec-rails](https://github.com/rspec/rspec-rails) and you can run the suite using:
+
+```
+bundle exec rspec
+```
+
+## Author
+This was written by [edymerchk](https://github.com/edymerchk).

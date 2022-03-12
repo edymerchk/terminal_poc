@@ -58,4 +58,7 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+  config.hosts << URI.parse(ENV['NGROK_HOST']).host if ENV['NGROK_HOST'].present?
+
+  config.csv_file_path = Rails.root.join('public', 'results.csv')
 end
